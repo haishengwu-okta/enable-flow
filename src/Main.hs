@@ -1,5 +1,6 @@
 module Main where
 
+import Data.List
 import System.Environment
 import Control.Monad
 import System.Directory
@@ -25,8 +26,13 @@ enableFlowDir dir = do
   mapM_ enableFlowFile allFiles
   mapM_ enableFlowDir allDirs
 
+flowAnnotation :: String
+flowAnnotation = "// @flow"
+
 enableFlowFile :: FilePath -> IO ()
 enableFlowFile file = do
-  print ("Insert // @flow annotation for file: " ++ file)
   fileContent <- S.readFile file
-  writeFile file ("// @flow\n" ++ fileContent)
+  case (stripPrefix flowAnnotation fileContent) of
+    Just _ -> print ("Ignore file: " ++ file)
+    Nothing -> print ("Insert flow annotation for file: " ++ file)
+               >> writeFile file (flowAnnotation ++ "\n" ++ fileContent)
