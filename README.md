@@ -1,3 +1,5 @@
+Basically automation tool for [Prepare Your Code for Flow](https://flow.org/en/docs/usage/#toc-prepare-your-code-for-flow)
+
 # installation
 
 0. `stack setup` follow up by installing [stack](https://docs.haskellstack.org/en/stable/README/)
